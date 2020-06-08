@@ -1,0 +1,26 @@
+service: myService
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+functions:
+  myFunction:
+    handler: myFunction.handler
+
+plugins:
+  - serverless-hosted-zone
+
+custom:
+  # based on https://docs.aws.amazon.com/Route53/latest/APIReference/API_CreateHostedZone.html
+  hostedZone:
+    name: domain.com. # required
+    vpc: # optional
+      id: vpcId
+      region: us-east-1
+    config: # optional
+      comment: My hosted zone
+      private: false
+    delegationSetId: N1PA6795SAMPLE # optional
+
+

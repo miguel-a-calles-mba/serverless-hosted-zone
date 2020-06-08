@@ -1,0 +1,29 @@
+{
+  "name": "serverless-hosted-zone",
+  "version": "0.0.1",
+  "description": "Serverless plugin to create a Route 53 hosted zone.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miguel-a-calles-mba/serverless-hosted-zone.git"
+  },
+  "keywords": [
+    "serverless",
+    "plugin",
+    "aws",
+    "cloudformation",
+    "route 53",
+    "hosted zone"
+  ],
+  "author": "Miguel A. Calles, MBA <miguelacallesmba@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miguel-a-calles-mba/serverless-hosted-zone/issues"
+  },
+  "homepage": "https://github.com/miguel-a-calles-mba/serverless-hosted-zone#readme",
+  "dependencies": {}
+}
