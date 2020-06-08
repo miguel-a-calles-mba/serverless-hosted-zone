@@ -54,7 +54,7 @@ module.exports = class ServerlessPlugin {
                 'listHostedZones'
             );
             if (HostedZones.find((x) => x.Name === name)) {
-                this.log(`${zoneName} already exists.`);
+                this.log(`${name} already exists.`);
                 return;
             }
             const createParams = {
@@ -101,9 +101,9 @@ module.exports = class ServerlessPlugin {
                 createParams
             );
             if (!HostedZone || !HostedZone.Id) {
-                this.throwError(`Failed to create ${zoneName}`);
+                this.throwError(`Failed to create ${name}`);
             }
-            this.log(`Created ${zoneName}`);
+            this.log(`Created ${name}`);
         } catch (e) {
             this.throwError(e.message);
         }
