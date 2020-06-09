@@ -74,7 +74,7 @@ sls remove-zone
 
 ### Notes
 
-Please request features or report problems using the [issues](https://github.com/miguel-a-calles-mba/serverless-stack-termination-protection/issues) page.
+Please request features or report problems using the [issues](https://github.com/miguel-a-calles-mba/serverless-hosted-zone/issues) page.
 
 ## License
 
