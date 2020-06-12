@@ -4,8 +4,9 @@
   "description": "Serverless plugin to create a Route 53 hosted zone.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "./node_modules/.bin/eslint index.js"
+    "test": "jest .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix index.js"
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,10 @@
     "url": "https://github.com/miguel-a-calles-mba/serverless-hosted-zone/issues"
   },
   "homepage": "https://github.com/miguel-a-calles-mba/serverless-hosted-zone#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "eslint-config-google": "^0.14.0",
+    "jest": "^26.0.1"
+  }
 }
