@@ -194,16 +194,12 @@ module.exports = class ServerlessPlugin {
             'listDistributions'
         );
         const distributions = DistributionList.Items || [];
-        this.log(`cname = ${cname}`);
         const distribution = distributions.find((x) => {
             const aliases = (x.Aliases || []).Items || [];
-            this.log(`aliases ${JSON.stringify(aliases, null, 2)}`);
             if (aliases.find((a) => `${a}.` === cname)) {
                 return x;
             }
         });
-        this.log('distribution ' + JSON.stringify(distribution, null, 2));
-        this.log('hostedZone ' + JSON.stringify(hostedZone, null, 2));
         const listParams = {
             HostedZoneId: hostedZoneId,
         };
@@ -213,16 +209,8 @@ module.exports = class ServerlessPlugin {
                 'listResourceRecordSets',
                 listParams
             )) || [];
-        this.log(
-            'ResourceRecordSets ' + JSON.stringify(ResourceRecordSets, null, 2)
-        );
-        const resourceRecordSet = ResourceRecordSets.find(
-            (x) => x.Name === cname
-        );
-        this.log(
-            'resourceRecordSet ' + JSON.stringify(resourceRecordSet, null, 2)
-        );
-        if (resourceRecordSet) {
+        const recordSet = ResourceRecordSets.find((x) => x.Name === cname);
+        if (recordSet) {
             this.log(`Route 53 record for ${cname} already exists.`);
             return;
         }
@@ -246,7 +234,6 @@ module.exports = class ServerlessPlugin {
             },
             HostedZoneId: hostedZoneId,
         };
-        this.log('createParams ' + JSON.stringify(createParams, null, 2));
         await this.provider.request(
             'Route53',
             'changeResourceRecordSets',
