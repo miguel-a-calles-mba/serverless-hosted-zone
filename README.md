@@ -1,5 +1,7 @@
 # Serverless Hosted Zone Plugin
 
+![Build](https://github.com/miguel-a-calles-mba/serverless-hosted-zone/workflows/Push%20to%20master/badge.svg)
+
 ## Table of Contents
 
 1. [Description](#description)
