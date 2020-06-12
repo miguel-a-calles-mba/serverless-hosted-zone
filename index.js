@@ -209,7 +209,9 @@ module.exports = class ServerlessPlugin {
                 'listResourceRecordSets',
                 listParams,
             )) || [];
-        const recordSet = ResourceRecordSets.find((x) => x.Name === cname);
+        const recordSet = ResourceRecordSets.find(
+            (x) => x.Name === cname && x.Type === 'A',
+        );
         if (recordSet) {
             this.log(`Route 53 record for ${cname} already exists.`);
             return;
