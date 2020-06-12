@@ -81,7 +81,7 @@ module.exports = class ServerlessPlugin {
         const name = this.getHostedZoneName();
         const { HostedZones } = await this.provider.request(
             'Route53',
-            'listHostedZones'
+            'listHostedZones',
         );
         return HostedZones.find((x) => x.Name === name);
     }
@@ -109,12 +109,12 @@ module.exports = class ServerlessPlugin {
             if (vpc) {
                 if (!vpc.id) {
                     this.throwError(
-                        `custom.hostedZone.vpc needs the id property.`
+                        `custom.hostedZone.vpc needs the id property.`,
                     );
                 }
                 if (!vpc.region) {
                     this.throwError(
-                        `custom.hostedZone.vpc needs the region property.`
+                        `custom.hostedZone.vpc needs the region property.`,
                     );
                 }
                 createParams.VPC = {
@@ -134,14 +134,14 @@ module.exports = class ServerlessPlugin {
                 if (!Object.keys(createParams.HostedZoneConfig).length) {
                     this.throwError(
                         'custom.hostedZone.config needs a ' +
-                            'comment or private property.'
+                            'comment or private property.',
                     );
                 }
             }
             const { HostedZone } = await this.provider.request(
                 'Route53',
                 'createHostedZone',
-                createParams
+                createParams,
             );
             if (!HostedZone || !HostedZone.Id) {
                 this.throwError(`Failed to create ${name}`);
@@ -161,14 +161,14 @@ module.exports = class ServerlessPlugin {
         if (hostedZone && aliases && Array.isArray(aliases)) {
             aliases.forEach((alias, i) => {
                 switch (alias.type) {
-                    case 'cloudfrontDistribution':
-                        const { cname } = alias;
-                        this.createDistributionAlias(cname, hostedZone);
-                        break;
-                    default:
-                        this.log(
-                            `Alias index ${i} does not have a valid entry.`
-                        );
+                case 'cloudfrontDistribution':
+                    const { cname } = alias;
+                    this.createDistributionAlias(cname, hostedZone);
+                    break;
+                default:
+                    this.log(
+                        `Alias index ${i} does not have a valid entry.`,
+                    );
                 }
             });
         } else {
@@ -191,7 +191,7 @@ module.exports = class ServerlessPlugin {
         }
         const { DistributionList } = await this.provider.request(
             'CloudFront',
-            'listDistributions'
+            'listDistributions',
         );
         const distributions = DistributionList.Items || [];
         const distribution = distributions.find((x) => {
@@ -207,7 +207,7 @@ module.exports = class ServerlessPlugin {
             (await this.provider.request(
                 'Route53',
                 'listResourceRecordSets',
-                listParams
+                listParams,
             )) || [];
         const recordSet = ResourceRecordSets.find((x) => x.Name === cname);
         if (recordSet) {
@@ -237,7 +237,7 @@ module.exports = class ServerlessPlugin {
         await this.provider.request(
             'Route53',
             'changeResourceRecordSets',
-            createParams
+            createParams,
         );
         this.log(`Created alias ${cname}`);
     }
