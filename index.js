@@ -6,9 +6,10 @@ module.exports = class ServerlessPlugin {
      * @param {Serverless} serverless Serverless object.
      * @param {*} options Options object.
      */
-    constructor(serverless, options) {
+    constructor(serverless, options, { log }) {
         this.serverless = serverless;
         this.options = options;
+        this.log = log ? log : this.logLegacy;
         this.commands = {
             'create-zone': {
                 lifecycleEvents: ['create'],
@@ -49,7 +50,7 @@ module.exports = class ServerlessPlugin {
      * Send a log message via the Serverless Framework.
      * @param {any} msg
      */
-    log(msg) {
+    logLegacy(msg) {
         this.serverless.cli.log(`Hosted Zone: ${msg}`);
     }
 
