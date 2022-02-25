@@ -9,7 +9,7 @@ module.exports = class ServerlessPlugin {
     constructor(serverless, options, { log }) {
         this.serverless = serverless;
         this.options = options;
-        this.log = log ? log : this.logLegacy;
+        this.slsLog = log;
         this.commands = {
             'create-zone': {
                 lifecycleEvents: ['create'],
@@ -50,8 +50,12 @@ module.exports = class ServerlessPlugin {
      * Send a log message via the Serverless Framework.
      * @param {any} msg
      */
-    logLegacy(msg) {
-        this.serverless.cli.log(`Hosted Zone: ${msg}`);
+    log(msg) {
+        if (this.slsLog) {
+            this.slsLog(`Hosted Zone Plugin: ${msg}`);
+        } else {
+            this.serverless.cli.log(`Hosted Zone Plugin: ${msg}`);
+        }
     }
 
     /**
