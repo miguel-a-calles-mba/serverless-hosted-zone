@@ -1,5 +1,12 @@
 # Change log
 
+## v0.0.8
+
+- Bump tmpl from 1.0.4 to 1.0.5 (#24) 
+- Bump jest from 27.1.0 to 27.5.1 (#49)
+- Bump eslint from 7.32.0 to 8.9.0 (#50)
+- Bump ansi-regex from 5.0.0 to 5.0.1 (#51)
+
 ## v0.0.7
 
 - Bump ws from 7.3.0 to 7.4.6 (#7)
