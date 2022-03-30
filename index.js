@@ -40,9 +40,6 @@ module.exports = class ServerlessPlugin {
             this.serverless.service.custom &&
             this.serverless.service.custom['hostedZone'];
         this.provider = this.serverless.getProvider('aws');
-        if (!this.config) {
-            this.throwError('Missing custom.hostedZone');
-        }
     }
 
     /**
@@ -87,9 +84,25 @@ module.exports = class ServerlessPlugin {
     }
 
     /**
+     * Logs that the module is disabled
+     * @return {Promise} Promise logging that this module is disabled
+     */
+    async reportDisabled() {
+        return Promise.resolve()
+            .then(() => {
+                return this.serverless.cli.log(
+                    'serverless-hosted-zone: disabled.');
+            });
+    }
+
+    /**
      * Create a hosted zone.
      */
     async createHostedZone() {
+        if (!this.config) {
+            return this.reportDisabled();
+        }
+
         const { vpc, config, delegationSetId } = this.config;
         const name = this.getHostedZoneName();
         this.log(`Attempting to create ${name}`);
@@ -156,6 +169,9 @@ module.exports = class ServerlessPlugin {
      * Create the aliases.
      */
     async createAliases() {
+        if (!this.config) {
+            return this.reportDisabled();
+        }
         const hostedZone = await this.getHostedZone();
         const { aliases } = this.config;
         if (hostedZone && aliases && Array.isArray(aliases)) {
