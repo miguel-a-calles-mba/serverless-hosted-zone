@@ -84,15 +84,10 @@ module.exports = class ServerlessPlugin {
     }
 
     /**
-     * Logs that the module is disabled
-     * @return {Promise} Promise logging that this module is disabled
+     * Logs that the module config is missing.
      */
-    async reportDisabled() {
-        return Promise.resolve()
-            .then(() => {
-                return this.serverless.cli.log(
-                    'serverless-hosted-zone: disabled.');
-            });
+    reportMissingConfig() {
+        this.log('Missing config. Skipping...');
     }
 
     /**
@@ -100,7 +95,7 @@ module.exports = class ServerlessPlugin {
      */
     async createHostedZone() {
         if (!this.config) {
-            return this.reportDisabled();
+            return this.reportMissingConfig();
         }
 
         const { vpc, config, delegationSetId } = this.config;
@@ -170,7 +165,7 @@ module.exports = class ServerlessPlugin {
      */
     async createAliases() {
         if (!this.config) {
-            return this.reportDisabled();
+            return this.reportMissingConfig();
         }
         const hostedZone = await this.getHostedZone();
         const { aliases } = this.config;
@@ -264,6 +259,9 @@ module.exports = class ServerlessPlugin {
      * Remove a hosted zone.
      */
     removeHostedZone() {
+        if (!this.config) {
+            return this.reportMissingConfig();
+        }
         this.log('Removing...');
         this.throwError('The remove feature currently does not exist.');
     }
@@ -272,12 +270,18 @@ module.exports = class ServerlessPlugin {
      * Remove the alias records.
      */
     removeAliasRecords() {
+        if (!this.config) {
+            return this.reportMissingConfig();
+        }
         this.log('Removing...');
         this.throwError('The remove feature currently does not exist.');
     }
 
     /** Print summary */
     printSummary() {
+        if (!this.config) {
+            return this.reportMissingConfig();
+        }
         this.log('Summary...');
         this.throwError('The summary feature currently does not exist.');
     }
