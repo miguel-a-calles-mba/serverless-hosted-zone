@@ -9,7 +9,6 @@ module.exports = class ServerlessPlugin {
     constructor(serverless, options, { log }) {
         this.serverless = serverless;
         this.options = options;
-        this.slsLog = log;
         this.commands = {
             'create-zone': {
                 lifecycleEvents: ['create'],
@@ -44,18 +43,13 @@ module.exports = class ServerlessPlugin {
         if (!this.config) {
             this.throwError('Missing custom.hostedZone');
         }
-    }
 
-    /**
-     * Send a log message via the Serverless Framework.
-     * @param {any} msg
-     */
-    log(msg) {
-        if (this.slsLog) {
-            this.slsLog(`Hosted Zone Plugin: ${msg}`);
-        } else {
-            this.serverless.cli.log(`Hosted Zone Plugin: ${msg}`);
-        }
+        /* backward compatibility for Serverless V3 logging */
+        this.log = log ? log : {
+            debug: this.serverless.cli.log,
+            info: this.serverless.cli.log,
+            warning: this.serverless.cli.log,
+        };
     }
 
     /**
@@ -97,11 +91,11 @@ module.exports = class ServerlessPlugin {
     async createHostedZone() {
         const { vpc, config, delegationSetId } = this.config;
         const name = this.getHostedZoneName();
-        this.log(`Attempting to create ${name}`);
+        this.log.debug(`Attempting to create ${name}`);
         try {
             const hostedZone = await this.getHostedZone();
             if (hostedZone) {
-                this.log(`${name} already exists.`);
+                this.log.info(`${name} already exists.`);
                 return;
             }
             const createParams = {
@@ -151,7 +145,7 @@ module.exports = class ServerlessPlugin {
             if (!HostedZone || !HostedZone.Id) {
                 this.throwError(`Failed to create ${name}`);
             }
-            this.log(`Created ${name}`);
+            this.log.info(`Created ${name}`);
         } catch (e) {
             this.throwError(e.message);
         }
@@ -171,13 +165,13 @@ module.exports = class ServerlessPlugin {
                     this.createDistributionAlias(cname, hostedZone);
                     break;
                 default:
-                    this.log(
+                    this.log.warn(
                         `Alias index ${i} does not have a valid entry.`,
                     );
                 }
             });
         } else {
-            this.log('No aliases to create.');
+            this.log.info('No aliases to create.');
         }
     }
 
@@ -218,7 +212,7 @@ module.exports = class ServerlessPlugin {
             (x) => x.Name === cname && x.Type === 'A',
         );
         if (recordSet) {
-            this.log(`Route 53 record for ${cname} already exists.`);
+            this.log.info(`Route 53 record for ${cname} already exists.`);
             return;
         }
         const createParams = {
@@ -246,14 +240,14 @@ module.exports = class ServerlessPlugin {
             'changeResourceRecordSets',
             createParams,
         );
-        this.log(`Created alias ${cname}`);
+        this.log.info(`Created alias ${cname}`);
     }
 
     /**
      * Remove a hosted zone.
      */
     removeHostedZone() {
-        this.log('Removing...');
+        this.log.info('Removing...');
         this.throwError('The remove feature currently does not exist.');
     }
 
@@ -261,13 +255,13 @@ module.exports = class ServerlessPlugin {
      * Remove the alias records.
      */
     removeAliasRecords() {
-        this.log('Removing...');
+        this.log.info('Removing...');
         this.throwError('The remove feature currently does not exist.');
     }
 
     /** Print summary */
     printSummary() {
-        this.log('Summary...');
+        this.log.info('Summary...');
         this.throwError('The summary feature currently does not exist.');
     }
 };
