@@ -85,6 +85,7 @@ module.exports = class ServerlessPlugin {
 
     /**
      * Logs that the module config is missing.
+     * @return {void}
      */
     reportMissingConfig() {
         this.log('Missing config. Skipping...');
@@ -92,6 +93,7 @@ module.exports = class ServerlessPlugin {
 
     /**
      * Create a hosted zone.
+     * @return {void}
      */
     async createHostedZone() {
         if (!this.config) {
@@ -162,6 +164,7 @@ module.exports = class ServerlessPlugin {
 
     /**
      * Create the aliases.
+     * @return {void}
      */
     async createAliases() {
         if (!this.config) {
@@ -191,6 +194,7 @@ module.exports = class ServerlessPlugin {
      * Create the alias for a CloudFront Distribution.
      * @param {string} cname
      * @param {object} hostedZone HostedZone object
+     * @return {void}
      */
     async createDistributionAlias(cname, hostedZone) {
         if (!hostedZone) {
@@ -257,6 +261,7 @@ module.exports = class ServerlessPlugin {
 
     /**
      * Remove a hosted zone.
+     * @return {void}
      */
     removeHostedZone() {
         if (!this.config) {
@@ -268,6 +273,7 @@ module.exports = class ServerlessPlugin {
 
     /**
      * Remove the alias records.
+     * @return {void}
      */
     removeAliasRecords() {
         if (!this.config) {
@@ -277,7 +283,10 @@ module.exports = class ServerlessPlugin {
         this.throwError('The remove feature currently does not exist.');
     }
 
-    /** Print summary */
+    /**
+     * Print summary
+     * @return {void}
+     */
     printSummary() {
         if (!this.config) {
             return this.reportMissingConfig();
