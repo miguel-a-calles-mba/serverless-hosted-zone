@@ -1,5 +1,10 @@
 # Change log
 
+## v0.0.9
+
+- Bump minimist from 1.2.5 to 1.2.6 (#55)
+- Bump eslint from 8.9.0 to 8.12.0 (#56)
+
 ## v0.0.8
 
 - Bump tmpl from 1.0.4 to 1.0.5 (#24) 
