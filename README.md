@@ -105,6 +105,8 @@ sls remove-aliases
 
 ### Notes
 
+The plugin will skip the execution instead of throwing an error when the configuration is missing in the `serverless.yml` file.
+
 Please request features or report problems using the [issues](https://github.com/miguel-a-calles-mba/serverless-hosted-zone/issues) page.
 
 ## IAM Policy

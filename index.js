@@ -40,9 +40,6 @@ module.exports = class ServerlessPlugin {
             this.serverless.service.custom &&
             this.serverless.service.custom['hostedZone'];
         this.provider = this.serverless.getProvider('aws');
-        if (!this.config) {
-            this.throwError('Missing custom.hostedZone');
-        }
     }
 
     /**
@@ -87,9 +84,22 @@ module.exports = class ServerlessPlugin {
     }
 
     /**
+     * Logs that the module config is missing.
+     * @return {void}
+     */
+    reportMissingConfig() {
+        this.log('Missing config. Skipping...');
+    }
+
+    /**
      * Create a hosted zone.
+     * @return {void}
      */
     async createHostedZone() {
+        if (!this.config) {
+            return this.reportMissingConfig();
+        }
+
         const { vpc, config, delegationSetId } = this.config;
         const name = this.getHostedZoneName();
         this.log(`Attempting to create ${name}`);
@@ -154,8 +164,12 @@ module.exports = class ServerlessPlugin {
 
     /**
      * Create the aliases.
+     * @return {void}
      */
     async createAliases() {
+        if (!this.config) {
+            return this.reportMissingConfig();
+        }
         const hostedZone = await this.getHostedZone();
         const { aliases } = this.config;
         if (hostedZone && aliases && Array.isArray(aliases)) {
@@ -180,6 +194,7 @@ module.exports = class ServerlessPlugin {
      * Create the alias for a CloudFront Distribution.
      * @param {string} cname
      * @param {object} hostedZone HostedZone object
+     * @return {void}
      */
     async createDistributionAlias(cname, hostedZone) {
         if (!hostedZone) {
@@ -246,22 +261,36 @@ module.exports = class ServerlessPlugin {
 
     /**
      * Remove a hosted zone.
+     * @return {void}
      */
     removeHostedZone() {
+        if (!this.config) {
+            return this.reportMissingConfig();
+        }
         this.log('Removing...');
         this.throwError('The remove feature currently does not exist.');
     }
 
     /**
      * Remove the alias records.
+     * @return {void}
      */
     removeAliasRecords() {
+        if (!this.config) {
+            return this.reportMissingConfig();
+        }
         this.log('Removing...');
         this.throwError('The remove feature currently does not exist.');
     }
 
-    /** Print summary */
+    /**
+     * Print summary
+     * @return {void}
+     */
     printSummary() {
+        if (!this.config) {
+            return this.reportMissingConfig();
+        }
         this.log('Summary...');
         this.throwError('The summary feature currently does not exist.');
     }
