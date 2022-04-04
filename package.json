@@ -1,6 +1,6 @@
 {
   "name": "serverless-hosted-zone",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "Serverless plugin to create a Route 53 hosted zone.",
   "main": "index.js",
   "scripts": {
