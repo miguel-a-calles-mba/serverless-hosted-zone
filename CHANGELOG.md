@@ -1,5 +1,9 @@
 # Change log
 
+## v0.1.0
+
+- feat: missing config is not an error (#57)
+
 ## v0.0.9
 
 - Bump minimist from 1.2.5 to 1.2.6 (#55)
