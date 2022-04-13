@@ -1,6 +1,9 @@
 # Serverless Hosted Zone Plugin
 
 ![Build](https://github.com/miguel-a-calles-mba/serverless-hosted-zone/workflows/Push%20to%20master/badge.svg)
+[![npm version](https://badge.fury.io/js/serverless-hosted-zone.svg)](https://www.npmjs.com/package/serverless-hosted-zone)
+[![vulnerabilities](https://snyk.io/test/github/miguel-a-calles-mba/serverless-hosted-zone/badge.svg)](https://snyk.io/test/github/miguel-a-calles-mba/serverless-hosted-zone)
+
 
 ## Table of Contents
 
