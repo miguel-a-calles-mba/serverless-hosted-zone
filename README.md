@@ -16,7 +16,7 @@
 
 ## Description
 
-This plugin allow you to call a CLI command to create and remove an AWS Route 53 hosted zone. This plugin is designed for the Serverless Framework 1.x.
+This plugin allow you to call a CLI command to create and remove an AWS Route 53 hosted zone. This plugin is designed for the Serverless Framework 1.x and above.
 
 ## Requirements
 
